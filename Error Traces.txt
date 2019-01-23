@@ -1,0 +1,47 @@
+Error:
+		AttributeError: module 'tensorflow._api.v1.nn' has no attribute 'seq2seq'
+Solution:
+		In line 147 of seq2seq_model.py replace 
+		<self.outputs, self.losses = tf.nn.seq2seq.model_with_buckets>	with
+		<self.outputs, self.losses = tf.contrib.seq2seq.model_with_buckets>
+
+Error:
+		ValueError: Variable proj_W already exists, disallowed. 
+		Did you mean to set reuse=True or reuse=tf.AUTO_REUSE in VarScope? 
+Solution:
+		Add this line <with tf.variable_scope("proj_W", reuse=tf.AUTO_REUSE):> above
+		<w = tf.get_variable("proj_w", [size, self.target_vocab_size])> above this line
+		and indent this line. Same goes for the "proj_b"
+
+Error:
+		AttributeError: module 'tensorflow.contrib.seq2seq' has no attribute 'model_with_buckets'
+Solution:
+		In line 149 of seq2seq_model.py replace
+		<tf.contrib.seq2seq> with <tf.contrib.legacy_seq2seq>
+
+Error:
+		AttributeError: module 'tensorflow._api.v1.nn' has no attribute 'seq2seq'
+Solution:
+		In line 110 of seq2seq_model.py replace
+		<tf.nn.seq2seq> with <tf.contrib.legacy_seq2seq>
+
+Error:
+		TypeError: sampled_loss() got an unexpected keyword argument 'logits'
+Solution:
+		In line 95-98 of seq2seq_model.py 
+		<def sampled_loss(inputs, labels):
+        		labels = tf.reshape(labels, [-1, 1])
+        		return tf.nn.sampled_softmax_loss(w_t, b, inputs, labels, num_samples,
+                	self.target_vocab_size)>
+		
+		Replace the above function with the function given below.
+		<def sampled_loss( labels,logits):
+        		labels = tf.reshape(labels, [-1, 1])
+        		return tf.nn.sampled_softmax_loss(w_t, b, labels,logits, num_samples,
+                	self.target_vocab_size)>
+
+Error:
+		ValueError: Variable embedding_attention_seq2seq/rnn/embedding_wrapper/embedding 
+		already exists, disallowed. Did you mean to set reuse=True or reuse=tf.AUTO_REUSE 
+		in VarScope? Originally defined at:
+Solution:
