@@ -8,11 +8,6 @@ An implementation of Seq2Seq that actually works. I want to make it easy for peo
 
 *Have Fun!*
 
-## Update 
-
-
-I have created another repository - [practical_seq2seq]() to experiment with the seq2seq model. The new model trained on Twitter chat log and Cornell Movie Dialog corpus performs well. I wrote an article - [Practical seq2seq](), explaining the code.
-
 
 
 ## Setup
